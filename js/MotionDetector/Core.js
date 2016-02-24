@@ -86,12 +86,12 @@
 			document.getElementById('movement').style.left = middle + 10 + 'px';
 
 			var video = document.getElementById('turning');
-			if(middle < 400){
-				video.playbackRate = -1;
-				video.play();
-			}else{
-				video.playbackRate = 1;
-			}
+			// if(middle < 400){
+			// 	video.playbackRate = -1;
+			// 	video.play();
+			// }else{
+			// 	video.playbackRate = 1;
+			// }
 
 			document.getElementById('movement').style.width = 20 + 'px';
 			document.getElementById('movement').style.height = 30 + 'px';
