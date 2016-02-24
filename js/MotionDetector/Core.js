@@ -118,15 +118,18 @@
 				direction = "none";
 			}
 
-			if(lastDirection !== direction){
-				my_video.currentTime = vidLength - my_video.currentTime;
-				my_video.play();
-				console.log("turn");
+			if(my_video.currentTime === vidLength/2 || my_video.currentTime === vidLength){
+				my_video.pause()
 			}
+
 
 			if(direction === "none"){
 				my_video.pause();
 				console.log("paused");
+			}else if(lastDirection !== direction){
+				my_video.currentTime = vidLength - my_video.currentTime;
+				my_video.play();
+				console.log("turn");
 			}
 
 
