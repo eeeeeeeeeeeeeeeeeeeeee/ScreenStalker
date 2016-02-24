@@ -1,12 +1,12 @@
 var core = new MotionDetector.Core();
 
-// var my_video = document.getElementById('turning');
-// my_video.oncanplay = my_video.play();
-//
+var my_video = document.getElementById('turning');
+my_video.currentTime = 5.5;
+my_video.oncanplay = my_video.play();
+my_video.loop = true;
+
 // document.getElementById("turning").addEventListener('click', function videoLinkClick(e){
-//     my_video.setCurrentTime(5);
-//     console.log(my_video.currentTime);
-//     debugger
+//     my_video.currentTime = 4.0;
 //     my_video.play();
 //     return false;
 // },false)

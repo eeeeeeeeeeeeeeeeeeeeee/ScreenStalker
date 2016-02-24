@@ -39,6 +39,8 @@
 
 		var currentLocation = MIDDLE;
 		var lastTarget = MIDDLE;
+		var direction = "none";
+		var lastDirection = "none";
 
 		var raf = (function(){
 			return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame ||
@@ -86,6 +88,7 @@
 			bottomRight[1] = vals.bottomRight[1] * 10;
 
 			var target = (topLeft[0] + bottomRight[0])/2;
+			var target = 600 - target;
 
 			// if(topLeft[0] === Infinity){
 			// 	target = MIDDLE;
@@ -100,15 +103,46 @@
 				target = lastTarget;
 			}
 
-			var video = document.getElementById('turning');
+			var my_video = document.getElementById('turning');
+
+			var vidLength = 11;
+			lastDirection = direction;
 
 			if(target < currentLocation){
 				currentLocation -= 10;
+				direction = "left"
 			}else if(target > currentLocation){
 				currentLocation += 10;
+				direction = "right"
+			}else if(target === currentLocation){
+				direction = "none";
 			}
 
-			console.log("currentLocation", currentLocation, "target", target/10, "lastTarget", lastTarget);
+			if(lastDirection !== direction){
+				my_video.currentTime = vidLength - my_video.currentTime;
+				my_video.play();
+				console.log("turn");
+			}
+
+			if(direction === "none"){
+				my_video.pause();
+				console.log("paused");
+			}
+
+
+
+
+			// if(currentLocation === 300){
+			// 	my_video.currentTime = vidLength - my_video.currentTime;
+			//
+			// 	console.log("currentLocation", currentLocation, "target", target/10, "lastTarget", lastTarget);
+			// }
+			// if(currentLocation === 400){
+			// 	my_video.currentTime = vidLength - my_video.currentTime;
+			// 	console.log("currentLocation", currentLocation, "target", target/10, "lastTarget", lastTarget);
+			// }
+
+
 
 			document.getElementById('movement').style.top = 10 + 'px';
 			document.getElementById('movement').style.left = currentLocation + 10 + 'px';
@@ -120,6 +154,18 @@
 			bottomRight = [0,0]
 
 		}
+		//
+		// function playVideo(currentTime){
+		// 	if(currentLocation === 300){
+		// 		my_video.currentTime = vidLength - my_video.currentTime;
+		//
+		// 		console.log("currentLocation", currentLocation, "target", target/10, "lastTarget", lastTarget);
+		// 	}
+		// 	if(currentLocation === 400){
+		// 		my_video.currentTime = vidLength - my_video.currentTime;
+		// 		console.log("currentLocation", currentLocation, "target", target/10, "lastTarget", lastTarget);
+		// 	}
+		// }
 
 		/*
 		 * The main rendering loop.
