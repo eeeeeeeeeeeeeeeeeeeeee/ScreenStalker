@@ -41,6 +41,7 @@
 		var lastTarget = MIDDLE;
 		var direction = "none";
 		var lastDirection = "none";
+		var count = 0;
 
 		var raf = (function(){
 			return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame ||
@@ -110,6 +111,9 @@
 
 			if(target < currentLocation){
 				currentLocation -= 10;
+				if(count > 4){
+
+				}
 				direction = "left"
 			}else if(target > currentLocation){
 				currentLocation += 10;
@@ -127,9 +131,12 @@
 				my_video.pause();
 				console.log("paused");
 			}else if(lastDirection !== direction){
+				if((my_video.currentTime > vidLength/2 && direction === "right") || (my_video.currentTime < vidLength/2 && direction === "left")){
+					return
+				}
 				my_video.currentTime = vidLength - my_video.currentTime;
 				my_video.play();
-				console.log("turn");
+				console.log("turn ", direction, "my_video ", my_video.currentTime);
 			}
 
 
