@@ -35,6 +35,11 @@
 		var topLeft = [Infinity,Infinity];
 		var bottomRight = [0,0];
 
+		var MIDDLE = 300;
+
+		var currentLocation = MIDDLE;
+		var lastTarget = MIDDLE;
+
 		var raf = (function(){
 			return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame ||
 			function( callback ){
@@ -80,18 +85,33 @@
 			bottomRight[0] = vals.bottomRight[0] * 10;
 			bottomRight[1] = vals.bottomRight[1] * 10;
 
-			var middle = (topLeft[0] + bottomRight[0])/2;
+			var target = (topLeft[0] + bottomRight[0])/2;
 
-			document.getElementById('movement').style.top = 10 + 'px';
-			document.getElementById('movement').style.left = middle + 10 + 'px';
+			// if(topLeft[0] === Infinity){
+			// 	target = MIDDLE;
+			// }
+			currentLocation = Math.floor(currentLocation/10)*10;
+			lastTarget = Math.floor(lastTarget/10)*10;
+			target = Math.floor(target/10)*10;
+
+			if(topLeft[0] !== Infinity){
+				lastTarget = target;
+			}else{
+				target = lastTarget;
+			}
 
 			var video = document.getElementById('turning');
-			// if(middle < 400){
-			// 	video.playbackRate = -1;
-			// 	video.play();
-			// }else{
-			// 	video.playbackRate = 1;
-			// }
+
+			if(target < currentLocation){
+				currentLocation -= 10;
+			}else if(target > currentLocation){
+				currentLocation += 10;
+			}
+
+			console.log("currentLocation", currentLocation, "target", target/10, "lastTarget", lastTarget);
+
+			document.getElementById('movement').style.top = 10 + 'px';
+			document.getElementById('movement').style.left = currentLocation + 10 + 'px';
 
 			document.getElementById('movement').style.width = 20 + 'px';
 			document.getElementById('movement').style.height = 30 + 'px';
