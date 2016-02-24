@@ -88,8 +88,16 @@
 			bottomRight[0] = vals.bottomRight[0] * 10;
 			bottomRight[1] = vals.bottomRight[1] * 10;
 
+			var my_area = area(topLeft, bottomRight);
+			if(my_area > 3000 && my_area !== Infinity){
+				// console.log(my_area);
+			}else{
+				topLeft = [Infinity,Infinity];
+				bottomRight = [0,0]
+			}
+
 			var target = (topLeft[0] + bottomRight[0])/2;
-			var target = 600 - target;
+			var target = 600 - target; // reverse
 
 			// if(topLeft[0] === Infinity){
 			// 	target = MIDDLE;
@@ -107,20 +115,30 @@
 			var my_video = document.getElementById('turning');
 
 			var vidLength = 11;
-			lastDirection = direction;
 
 			if(target < currentLocation){
 				currentLocation -= 10;
-				if(count > 4){
-
+				if(count < -3){
+					lastDirection = direction;
+					direction = "left"
+					count = 0;
+				}else{
+					count--;
 				}
-				direction = "left"
 			}else if(target > currentLocation){
 				currentLocation += 10;
-				direction = "right"
+				if(count > 3){
+					lastDirection = direction;
+					direction = "right"
+					count = 0;
+				}else{
+					count++;
+				}
 			}else if(target === currentLocation){
 				direction = "none";
+				lastDirection = direction;
 			}
+			// console.log(count);
 
 			if(my_video.currentTime === vidLength/2 || my_video.currentTime === vidLength){
 				my_video.pause()
@@ -131,7 +149,9 @@
 				my_video.pause();
 				console.log("paused");
 			}else if(lastDirection !== direction){
+				console.log("turn ", direction, lastDirection);
 				if((my_video.currentTime > vidLength/2 && direction === "right") || (my_video.currentTime < vidLength/2 && direction === "left")){
+					console.log("trying to turn wrong way");
 					return
 				}
 				my_video.currentTime = vidLength - my_video.currentTime;
@@ -140,25 +160,18 @@
 			}
 
 
+			document.getElementById('movement').style.top = topLeft[1] + 'px';
+			document.getElementById('movement').style.left = topLeft[0] + 'px';
+
+			document.getElementById('movement').style.width = (bottomRight[0] - topLeft[0]) + 'px';
+			document.getElementById('movement').style.height = (bottomRight[1] - topLeft[1]) + 'px';
 
 
-			// if(currentLocation === 300){
-			// 	my_video.currentTime = vidLength - my_video.currentTime;
-			//
-			// 	console.log("currentLocation", currentLocation, "target", target/10, "lastTarget", lastTarget);
-			// }
-			// if(currentLocation === 400){
-			// 	my_video.currentTime = vidLength - my_video.currentTime;
-			// 	console.log("currentLocation", currentLocation, "target", target/10, "lastTarget", lastTarget);
-			// }
+			document.getElementById('sideToSide').style.top = 10 + 'px';
+			document.getElementById('sideToSide').style.left = currentLocation + 10 + 'px';
 
-
-
-			document.getElementById('movement').style.top = 10 + 'px';
-			document.getElementById('movement').style.left = currentLocation + 10 + 'px';
-
-			document.getElementById('movement').style.width = 20 + 'px';
-			document.getElementById('movement').style.height = 30 + 'px';
+			document.getElementById('sideToSide').style.width = 20 + 'px';
+			document.getElementById('sideToSide').style.height = 30 + 'px';
 
 			topLeft = [Infinity,Infinity];
 			bottomRight = [0,0]
@@ -176,6 +189,12 @@
 		// 		console.log("currentLocation", currentLocation, "target", target/10, "lastTarget", lastTarget);
 		// 	}
 		// }
+
+		function area(topLeft, bottomRight){
+			var x = bottomRight[0] - topLeft[0]
+			var y = bottomRight[1] - topLeft[1]
+			return x*y
+		}
 
 		/*
 		 * The main rendering loop.
