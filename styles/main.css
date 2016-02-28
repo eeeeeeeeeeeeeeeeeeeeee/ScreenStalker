@@ -10,6 +10,12 @@
 	display: none;
 }
 
+#turningSprite{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
 #canvas {
 	position: absolute;
 	opacity: 1;

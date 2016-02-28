@@ -102,6 +102,13 @@
 			// if(topLeft[0] === Infinity){
 			// 	target = MIDDLE;
 			// }
+			var frame = Math.floor(currentLocation/20);
+			console.log(frame);
+			var offset = getOffSet(7, 5, 7240, 6585, frame);
+			document.getElementById("turningSprite").style.left = offset[0]*-1 +"px";
+			document.getElementById("turningSprite").style.top = offset[1]*-1 +"px";
+
+
 			currentLocation = Math.floor(currentLocation/10)*10;
 			lastTarget = Math.floor(lastTarget/10)*10;
 			target = Math.floor(target/10)*10;
@@ -140,23 +147,31 @@
 			}
 			// console.log(count);
 
-			if(my_video.currentTime === vidLength/2 || my_video.currentTime === vidLength){
-				my_video.pause()
-			}
+			// if(my_video.currentTime === vidLength/2 || my_video.currentTime === vidLength){
+			// 	my_video.pause()
+			// }
 
 
-			if(direction === "none"){
-				my_video.pause();
-				console.log("paused");
-			}else if(lastDirection !== direction){
-				console.log("turn ", direction, lastDirection);
-				if((my_video.currentTime > vidLength/2 && direction === "right") || (my_video.currentTime < vidLength/2 && direction === "left")){
-					console.log("trying to turn wrong way");
-					return
-				}
-				my_video.currentTime = vidLength - my_video.currentTime;
-				my_video.play();
-				console.log("turn ", direction, "my_video ", my_video.currentTime);
+			// if(direction === "none"){
+			// 	my_video.pause();
+			// 	console.log("paused");
+			// }else if(lastDirection !== direction){
+			// 	console.log("turn ", direction, lastDirection);
+			// 	if((my_video.currentTime > vidLength/2 && direction === "right") || (my_video.currentTime < vidLength/2 && direction === "left")){
+			// 		console.log("trying to turn wrong way");
+			// 		return
+			// 	}
+			// 	my_video.currentTime = vidLength - my_video.currentTime;
+			// 	my_video.play();
+			// 	console.log("turn ", direction, "my_video ", my_video.currentTime);
+			// }
+
+			function getOffSet(rows, columns, width, height, frame){
+				var imgWidth = width / columns;
+				var imgHeight = height / rows;
+				var x = imgWidth * (frame % columns);
+				var y = imgHeight * Math.floor(frame / columns);
+				return [x, y]
 			}
 
 
