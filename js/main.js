@@ -11,7 +11,7 @@ function handleMouseMove(event) {
 
     var frame = Math.floor(totalFrames*percentWidth);
 
-    var offset = getOffSet(5, 3, 2881, 2701, frame);
+    var offset = getOffSet(5, 3, window.innerWidth * 3, window.innerWidth * .56295525494 * 5, frame);
     document.getElementById("turningSprite").style.left = offset[0]*-1 +"px";
     document.getElementById("turningSprite").style.top = offset[1]*-1 +"px";
 
