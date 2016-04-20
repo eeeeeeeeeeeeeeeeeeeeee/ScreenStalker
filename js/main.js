@@ -1,5 +1,28 @@
-var core = new MotionDetector.Core();
+document.onmousemove = handleMouseMove;
+function handleMouseMove(event) {
+    var dot, eventDoc, doc, body, pageX, pageY;
 
-// var my_video = document.getElementById('turning');
-// my_video.currentTime = 2.75;
-// my_video.loop = true;
+    event = event || window.event; // IE-ism
+
+    var percentWidth =  event.pageX / window.innerWidth
+    var percentHeight = event.pageY / window.innerHeight
+
+    var totalFrames = 13;
+
+    var frame = Math.floor(totalFrames*percentWidth);
+
+    var offset = getOffSet(5, 3, 2881, 2701, frame);
+    document.getElementById("turningSprite").style.left = offset[0]*-1 +"px";
+    document.getElementById("turningSprite").style.top = offset[1]*-1 +"px";
+
+    // Use event.pageX / event.pageY here
+}
+
+
+function getOffSet(rows, columns, width, height, frame){
+  var imgWidth = width / columns;
+  var imgHeight = height / rows;
+  var x = imgWidth * (frame % columns);
+  var y = imgHeight * Math.floor(frame / columns);
+  return [x, y]
+}

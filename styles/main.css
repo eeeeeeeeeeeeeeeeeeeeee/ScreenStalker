@@ -36,3 +36,10 @@
 #movement{
 	display: none;
 }
+
+.animationWrapper {
+    width: 900px;
+    height: 520px;
+    overflow: hidden;
+    position: absolute;
+}
